@@ -20,18 +20,11 @@ EXPLAIN WITH df2 AS (
     LEFT JOIN inventorypolicies ip on df2.facilityname = replace(replace(lower(ip.facilityname), 'w12901x', 'w12901'), 'w12901', 'w12901x')
         and df2.productname = lower(ip.productname)
     LEFT JOIN products p ON df2.productname = lower(p.productname)
-), df6 AS (
-    SELECT df5.scenarioname,
-        df5.flowpath,
-        sum(df5.eodinventory) AS unitsonhand,
-        sum(df5.valueonhand) AS valueonhand,
-        df5.simdate
-    FROM df5
-    GROUP BY df5.scenarioname, df5.flowpath, df5.simdate
 )
-SELECT df6.scenarioname,
-    df6.flowpath,
-    df6.unitsonhand,
-    df6.valueonhand,
-    df6.simdate
-FROM df6;
+SELECT df5.scenarioname,
+    df5.flowpath,
+    sum(df5.eodinventory) AS unitsonhand,
+    sum(df5.valueonhand) AS valueonhand,
+    df5.simdate
+FROM df5
+GROUP BY df5.scenarioname, df5.flowpath, df5.simdate
