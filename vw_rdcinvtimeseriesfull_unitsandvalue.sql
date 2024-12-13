@@ -15,7 +15,6 @@ EXPLAIN WITH df2 AS (
         df2.simdate,
         df2.inventoryonhandquantity AS eodinventory,
         ip.flowpath,
-        p.unitvalue::numeric as unitvalue,
         p.unitvalue::numeric * df2.inventoryonhandquantity AS valueonhand
     FROM df2
     LEFT JOIN inventorypolicies ip on df2.facilityname = replace(replace(lower(ip.facilityname), 'w12901x', 'w12901'), 'w12901', 'w12901x')
