@@ -7,7 +7,7 @@ EXPLAIN WITH df0 AS (
         inv.inventoryonhandquantity,
         inv."time"
     FROM simulationinventoryonhandreport inv
-    WHERE inv.scenarioname = 'RDC HW'::text 
+    WHERE inv.scenarioname = 'RDC HW'
 ), df1 AS (
     SELECT df0.scenarioname,
         df0.facilityname,
