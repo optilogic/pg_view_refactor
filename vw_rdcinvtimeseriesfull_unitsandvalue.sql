@@ -22,7 +22,6 @@ EXPLAIN WITH df2 AS (
         df3.flowpath
     FROM df2
     LEFT JOIN df3 USING (facilityname, productname)
-    ORDER BY df2.scenarioname, df2.facilityname, df2.productname, df2.simdate
 ), df5_1 AS (
     SELECT df4.scenarioname,
         df4.facilityname,
