@@ -1,13 +1,13 @@
 EXPLAIN WITH df0 AS (
-    SELECT simulationinventoryonhandreport.id,
-        simulationinventoryonhandreport.scenarioname,
-        simulationinventoryonhandreport.replicationnumber,
-        simulationinventoryonhandreport.facilityname,
-        simulationinventoryonhandreport.productname,
-        simulationinventoryonhandreport.inventoryonhandquantity,
-        simulationinventoryonhandreport."time"
-    FROM simulationinventoryonhandreport
-    WHERE simulationinventoryonhandreport.scenarioname = 'RDC HW'::text 
+    SELECT inv.id,
+        inv.scenarioname,
+        inv.replicationnumber,
+        inv.facilityname,
+        inv.productname,
+        inv.inventoryonhandquantity,
+        inv."time"
+    FROM simulationinventoryonhandreport inv
+    WHERE inv.scenarioname = 'RDC HW'::text 
 ), df1 AS (
     SELECT df0.scenarioname,
         df0.facilityname,
