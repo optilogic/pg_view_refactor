@@ -21,10 +21,10 @@ EXPLAIN WITH df2 AS (
         and df2.productname = lower(ip.productname)
     LEFT JOIN products p ON df2.productname = lower(p.productname)
 )
-SELECT df5.scenarioname,
-    df5.flowpath,
-    sum(df5.eodinventory) AS unitsonhand,
-    sum(df5.valueonhand) AS valueonhand,
-    df5.simdate
+SELECT scenarioname,
+    flowpath,
+    sum(eodinventory) AS unitsonhand,
+    sum(valueonhand) AS valueonhand,
+    simdate
 FROM df5
-GROUP BY df5.scenarioname, df5.flowpath, df5.simdate
+GROUP BY scenarioname, flowpath, simdate
