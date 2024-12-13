@@ -1,5 +1,6 @@
-EXPLAIN WITH df1 AS (
-    SELECT inv.scenarioname,
+EXPLAIN WITH df2 AS (
+    SELECT  DISTINCT ON (inv.scenarioname, inv.facilityname, inv.productname, inv."time"::date) 
+        inv.scenarioname,
         inv.facilityname,
         inv.productname,
         inv.inventoryonhandquantity,
@@ -7,14 +8,6 @@ EXPLAIN WITH df1 AS (
     FROM simulationinventoryonhandreport inv
     WHERE inv.scenarioname = 'RDC HW'
     ORDER BY inv.scenarioname, inv.facilityname, inv.productname, inv."time"::date, inv."time" DESC
-), df2 AS (
-    SELECT DISTINCT ON (df1.scenarioname, df1.facilityname, df1.productname, df1.simdate) 
-        df1.scenarioname,
-        df1.facilityname,
-        df1.productname,
-        df1.simdate,
-        df1.inventoryonhandquantity
-    FROM df1
 ), df3_1 AS (
     SELECT lower(inventorypolicies.facilityname) AS facilityname,
         lower(inventorypolicies.productname) AS productname,
