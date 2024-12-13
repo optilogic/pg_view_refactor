@@ -8,20 +8,16 @@ EXPLAIN WITH df2 AS (
     FROM simulationinventoryonhandreport inv
     WHERE inv.scenarioname = 'RDC HW'
     ORDER BY inv.scenarioname, inv.facilityname, inv.productname, inv."time"::date, inv."time" DESC
-), df3 AS (
-    SELECT replace(replace(lower(ip.facilityname), 'w12901x', 'w12901'), 'w12901', 'w12901x') AS facilityname,
-        lower(ip.productname) AS productname,
-        ip.flowpath
-    FROM inventorypolicies ip
 ), df4 AS (
     SELECT df2.facilityname,
         df2.productname,
         df2.scenarioname,
         df2.simdate,
         df2.inventoryonhandquantity,
-        df3.flowpath
+        ip.flowpath
     FROM df2
-    LEFT JOIN df3 USING (facilityname, productname)
+    LEFT JOIN inventorypolicies ip on df2.facilityname = replace(replace(lower(ip.facilityname), 'w12901x', 'w12901'), 'w12901', 'w12901x')
+        and df2.productname = lower(ip.productname)
 ), df5_1 AS (
     SELECT df4.scenarioname,
         df4.facilityname,
