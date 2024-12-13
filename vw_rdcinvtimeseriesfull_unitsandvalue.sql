@@ -9,7 +9,7 @@ EXPLAIN WITH df2 AS (
     WHERE inv.scenarioname = 'RDC HW'
     ORDER BY inv.scenarioname, inv.facilityname, inv.productname, inv."time"::date, inv."time" DESC
 ), df3 AS (
-    SELECT replace(replace(lower(ip.facilityname), 'w12901x'::text, 'w12901'::text), 'w12901'::text, 'w12901x'::text) AS facilityname,
+    SELECT replace(replace(lower(ip.facilityname), 'w12901x', 'w12901'), 'w12901', 'w12901x') AS facilityname,
         lower(ip.productname) AS productname,
         ip.flowpath
     FROM inventorypolicies ip
