@@ -1,19 +1,12 @@
-EXPLAIN WITH df0 AS (
+EXPLAIN WITH df1 AS (
     SELECT inv.scenarioname,
         inv.facilityname,
         inv.productname,
         inv.inventoryonhandquantity,
-        inv."time"
+        inv."time"::date AS simdate
     FROM simulationinventoryonhandreport inv
     WHERE inv.scenarioname = 'RDC HW'
-), df1 AS (
-    SELECT df0.scenarioname,
-        df0.facilityname,
-        df0.productname,
-        df0.inventoryonhandquantity,
-        df0."time"::date AS simdate
-    FROM df0
-    ORDER BY df0.scenarioname, df0.facilityname, df0.productname, df0."time"::date, df0."time" DESC
+    ORDER BY inv.scenarioname, inv.facilityname, inv.productname, inv."time"::date, inv."time" DESC
 ), df2 AS (
     SELECT DISTINCT ON (df1.scenarioname, df1.facilityname, df1.productname, df1.simdate) 
         df1.scenarioname,
