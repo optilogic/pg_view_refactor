@@ -1,17 +1,15 @@
 EXPLAIN WITH eodInventoryOnHand AS (
-    SELECT  DISTINCT ON (inv.scenarioname, inv.facilityname, inv.productname, inv."time"::date) 
-        inv.scenarioname,
+    SELECT  DISTINCT ON (inv.facilityname, inv.productname, inv."time"::date) 
         inv.facilityname,
         inv.productname,
         inv.inventoryonhandquantity,
         inv."time"::date AS simdate
     FROM simulationinventoryonhandreport inv
     WHERE inv.scenarioname = 'RDC HW'
-    ORDER BY inv.scenarioname, inv.facilityname, inv.productname, inv."time"::date, inv."time" DESC
+    ORDER BY inv.facilityname, inv.productname, inv."time"::date, inv."time" DESC
 ), eodInventoryValues AS (
     SELECT eod.facilityname,
         eod.productname,
-        eod.scenarioname,
         eod.simdate,
         eod.inventoryonhandquantity AS eodinventory,
         ip.flowpath,
@@ -21,10 +19,10 @@ EXPLAIN WITH eodInventoryOnHand AS (
         and eod.productname = lower(ip.productname)
     LEFT JOIN products p ON eod.productname = lower(p.productname)
 )
-SELECT scenarioname,
+SELECT 'RDC HW' AS scenarioname,
     flowpath,
     sum(eodinventory) AS unitsonhand,
     sum(valueonhand) AS valueonhand,
     simdate
 FROM eodInventoryValues
-GROUP BY scenarioname, flowpath, simdate
+GROUP BY flowpath, simdate
