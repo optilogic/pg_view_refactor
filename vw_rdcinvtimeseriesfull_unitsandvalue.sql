@@ -18,10 +18,6 @@ EXPLAIN WITH df2 AS (
     FROM df2
     LEFT JOIN inventorypolicies ip on df2.facilityname = replace(replace(lower(ip.facilityname), 'w12901x', 'w12901'), 'w12901', 'w12901x')
         and df2.productname = lower(ip.productname)
-), df5_2 AS (
-    SELECT lower(products.productname) AS productname,
-        products.unitvalue::numeric AS unitvalue
-    FROM products
 ), df5 AS (
     SELECT df5_1.productname,
         df5_1.scenarioname,
@@ -29,10 +25,10 @@ EXPLAIN WITH df2 AS (
         df5_1.eodinventory,
         df5_1.simdate,
         df5_1.flowpath,
-        df5_2.unitvalue,
-        df5_2.unitvalue * df5_1.eodinventory AS valueonhand
+        p.unitvalue::numeric as unitvalue,
+        p.unitvalue::numeric * df5_1.eodinventory AS valueonhand
     FROM df5_1
-    LEFT JOIN df5_2 USING (productname)
+    LEFT JOIN products p ON df5_1.productname = lower(p.productname)
 ), df6 AS (
     SELECT df5.scenarioname,
         df5.flowpath,
