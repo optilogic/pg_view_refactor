@@ -8,16 +8,11 @@ EXPLAIN WITH df2 AS (
     FROM simulationinventoryonhandreport inv
     WHERE inv.scenarioname = 'RDC HW'
     ORDER BY inv.scenarioname, inv.facilityname, inv.productname, inv."time"::date, inv."time" DESC
-), df3_1 AS (
-    SELECT lower(ip.facilityname) AS facilityname,
+), df3 AS (
+    SELECT replace(replace(lower(ip.facilityname), 'w12901x'::text, 'w12901'::text), 'w12901'::text, 'w12901x'::text) AS facilityname,
         lower(ip.productname) AS productname,
         ip.flowpath
     FROM inventorypolicies ip
-), df3 AS (
-        SELECT replace(replace(df3_1.facilityname, 'w12901x'::text, 'w12901'::text), 'w12901'::text, 'w12901x'::text) AS facilityname,
-            df3_1.productname,
-            df3_1.flowpath
-    FROM df3_1
 ), df4 AS (
     SELECT df2.facilityname,
         df2.productname,
