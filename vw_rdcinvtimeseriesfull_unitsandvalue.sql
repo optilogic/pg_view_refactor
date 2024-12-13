@@ -1,7 +1,5 @@
 EXPLAIN WITH df0 AS (
-    SELECT inv.id,
-        inv.scenarioname,
-        inv.replicationnumber,
+    SELECT inv.scenarioname,
         inv.facilityname,
         inv.productname,
         inv.inventoryonhandquantity,
