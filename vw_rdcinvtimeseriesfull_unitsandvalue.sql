@@ -11,7 +11,6 @@ EXPLAIN WITH df0 AS (
         df0.facilityname,
         df0.productname,
         df0.inventoryonhandquantity,
-        df0."time",
         df0."time"::date AS simdate
     FROM df0
     ORDER BY df0.scenarioname, df0.facilityname, df0.productname, df0."time"::date, df0."time" DESC
